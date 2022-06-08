@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "288234081894",
+    "project_id": "baseadm-f1f63",
+    "storage_bucket": "baseadm-f1f63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288234081894:android:3945756859a0742c1e67a7",
+        "android_client_info": {
+          "package_name": "com.example.base_adm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288234081894-jf1264hopjbt2qqidf3kp1drll7bdob2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwplonPs29aJESByawptZ130TAcf4qkL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288234081894-jf1264hopjbt2qqidf3kp1drll7bdob2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "288234081894-rts9fjcij64bh9pmrij6al72rmalebs4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.baseAdm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
