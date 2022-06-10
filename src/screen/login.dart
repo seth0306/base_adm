@@ -1,45 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BaseADM',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'BaseADM'),
+class LoginPage extends StatefulWidget {
+  static Route<dynamic> route({
+    required String title,
+  }) {
+    return MaterialPageRoute<dynamic>(
+      builder: (_) => LoginPage(),
+      settings: RouteSettings(arguments: title),
     );
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -50,13 +20,11 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
-
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _LoginPageState extends State<LoginPage> {
   // 入力されたメールアドレス
   String newUserEmail = "";
   // 入力されたパスワード
@@ -77,9 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    final title = ModalRoute.of(context)?.settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title.toString()),
       ),
       body: Center(
         child: Container(
@@ -133,6 +104,50 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 8,
               ),
+              const SizedBox(height: 32),
+              TextFormField(
+                decoration: const InputDecoration(labelText: "メールアドレス"),
+                onChanged: (String value) {
+                  setState(() {
+                    loginUserEmail = value;
+                  });
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: "パスワード"),
+                obscureText: true,
+                onChanged: (String value) {
+                  setState(() {
+                    loginUserPassword = value;
+                  });
+                },
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    // メール/パスワードでログイン
+                    final FirebaseAuth auth = FirebaseAuth.instance;
+                    final UserCredential result =
+                        await auth.signInWithEmailAndPassword(
+                      email: loginUserEmail,
+                      password: loginUserPassword,
+                    );
+                    // ログインに成功した場合
+                    final User user = result.user!;
+                    setState(() {
+                      infoText = "ログインOK：${user.email}";
+                    });
+                  } catch (e) {
+                    // ログインに失敗した場合
+                    setState(() {
+                      infoText = "ログインNG：${e.toString()}";
+                    });
+                  }
+                },
+                child: const Text("ログイン"),
+              ),
+              const SizedBox(height: 8),
               Text(infoText)
             ],
           ),
