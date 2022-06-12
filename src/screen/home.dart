@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'login.dart';
+import 'register.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
                 width: 130,
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push<dynamic>(LoginPage.route(
+                      Navigator.of(context).push<dynamic>(RegisterPage.route(
                         title: widget.title,
                       ));
                     },
