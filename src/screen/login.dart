@@ -2,18 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({
-    Key? key,
-  }) : super(key: key);
-  static Route<dynamic> route({
-    required String title,
-  }) {
-    return MaterialPageRoute<dynamic>(
-      builder: (_) => const LoginPage(),
-      settings: RouteSettings(arguments: title),
-    );
-  }
+  const LoginPage({Key? key, required this.title}) : super(key: key);
 
+  final String title;
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -44,11 +35,9 @@ class _LoginPageState extends State<LoginPage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
 
-    final title = ModalRoute.of(context)?.settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(title.toString()),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Container(

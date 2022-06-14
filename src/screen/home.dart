@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'login.dart';
-import 'register.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +31,7 @@ class _HomePageState extends State<HomePage> {
                 width: 130,
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push<dynamic>(RegisterPage.route(
-                        title: widget.title,
-                      ));
+                      context.go('/register');
                     },
                     child: const Text("ユーザー登録")),
               ),
@@ -42,9 +41,7 @@ class _HomePageState extends State<HomePage> {
                 width: 130,
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push<dynamic>(LoginPage.route(
-                        title: widget.title,
-                      ));
+                      context.go('/login');
                     },
                     child: const Text("ログイン")),
               ),
