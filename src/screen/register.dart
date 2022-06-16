@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  RegisterPageState createState() => RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPageState extends ConsumerState<RegisterPage> {
   // 入力されたメールアドレス
   String newUserEmail = "";
   // 入力されたパスワード
