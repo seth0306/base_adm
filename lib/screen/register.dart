@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../components/loginprovider.dart';
+
 class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({Key? key, required this.title}) : super(key: key);
 
@@ -61,12 +63,9 @@ class RegisterPageState extends ConsumerState<RegisterPage> {
                   onPressed: () async {
                     try {
                       // メール/パスワードでユーザー登録
-                      final FirebaseAuth auth = FirebaseAuth.instance;
-                      final UserCredential result =
-                          await auth.createUserWithEmailAndPassword(
-                        email: newUserEmail,
-                        password: newUserPassword,
-                      );
+                      final UserCredential result = await ref
+                          .read(loginProvider.notifier)
+                          .create(newUserEmail, newUserPassword);
 
                       // 登録したユーザー情報
                       final User user = result.user!;

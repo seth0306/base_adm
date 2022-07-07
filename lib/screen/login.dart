@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../main.dart';
+import '../components/loginprovider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key, required this.title}) : super(key: key);
@@ -63,22 +63,15 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 onPressed: () async {
                   try {
                     // メール/パスワードでログイン
-                    final FirebaseAuth auth = FirebaseAuth.instance;
-                    final UserCredential result =
-                        await auth.signInWithEmailAndPassword(
-                      email: loginUserEmail,
-                      password: loginUserPassword,
-                    );
-                    // ログインに成功した場合
-                    final User user = result.user!;
-                    // user情報を更新
-                    ref.read(userProvider.state).state = result.user;
+                    ref
+                        .read(loginProvider.notifier)
+                        .login(loginUserEmail, loginUserPassword);
 
-                    setState(() {
-                      infoText = "ログインOK：${user.email}";
-                    });
+                    //　ログインが成功したらホームに遷移
+                    if (!mounted) return;
+                    context.go('/');
                   } catch (e) {
-                    // ログインに失敗した場合
+                    // ログインに失敗した場合エラーメッセージを表示
                     setState(() {
                       infoText = "ログインNG：${e.toString()}";
                     });
